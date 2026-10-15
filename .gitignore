@@ -1,0 +1,15 @@
+.venv/
+.vscode/
+.idea/
+.diagnostics/
+__pycache__/
+*.pyc
+.pytest_cache/
+artifacts/
+data/
+models/
+weights/
+datasets/
+runs/
+*.engine
+*.pt

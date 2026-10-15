@@ -1,0 +1,7 @@
+# Copy to your dataset root as data.yaml and set an absolute path.
+path: C:/path/to/datasets/mcoc
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: fighter

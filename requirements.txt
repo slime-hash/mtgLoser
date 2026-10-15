@@ -1,0 +1,16 @@
+# Install the CUDA build of PyTorch first (see setup.ps1).
+torch==2.8.0
+torchvision==0.23.0
+ultralytics>=8.3.200,<9
+opencv-python>=4.10,<5
+cv2-enumerate-cameras>=1.1,<2
+dxcam==0.3.0
+pytest>=8,<9
+winrt-runtime==3.2.1
+winrt-Windows.Foundation==3.2.1
+winrt-Windows.Foundation.Collections==3.2.1
+winrt-Windows.Globalization==3.2.1
+winrt-Windows.Graphics.Imaging==3.2.1
+winrt-Windows.Media.Ocr==3.2.1
+winrt-Windows.Storage==3.2.1
+winrt-Windows.Storage.Streams==3.2.1

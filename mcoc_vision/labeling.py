@@ -182,7 +182,10 @@ def review_prelabels(prelabels_dir, window_width=1152, window_height=648):
     state = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else {'reviewed': {}}
     index = min(state.get('next_index', 0), max(len(records) - 1, 0))
     window = 'MCOC label review'
-    cv2.namedWindow(window, cv2.WINDOW_AUTOSIZE)
+    # A normal resizable window lets the reviewer maximize it.  The rendered
+    # frame is fitted to the current client area on every iteration below.
+    cv2.namedWindow(window, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(window, window_width, window_height)
     drag = {'mode': None, 'index': None, 'start': None, 'current': None, 'original': None}
 
     def read_boxes(record, image):
@@ -299,7 +302,13 @@ def review_prelabels(prelabels_dir, window_width=1152, window_height=648):
                 cv2.putText(canvas, line, (12, y), cv2.FONT_HERSHEY_SIMPLEX, .55, (0, 0, 0), 4)
                 cv2.putText(canvas, line, (12, y), cv2.FONT_HERSHEY_SIMPLEX, .55, (255, 255, 255), 1)
             image_h, image_w = image.shape[:2]
-            scale = min(window_width / image_w, window_height / image_h)
+            try:
+                _, _, client_w, client_h = cv2.getWindowImageRect(window)
+            except cv2.error:
+                client_w, client_h = window_width, window_height
+            client_w = max(1, int(client_w))
+            client_h = max(1, int(client_h))
+            scale = min(client_w / image_w, client_h / image_h)
             display_size[:] = [max(1, round(image_w * scale)), max(1, round(image_h * scale))]
             shown = cv2.resize(canvas, tuple(display_size), interpolation=cv2.INTER_AREA)
             cv2.imshow(window, shown)
